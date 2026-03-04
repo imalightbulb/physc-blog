@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 305" style="font-family:Inter,sans-serif;background:white;">
+  <title>Particle in a Box — Probability Density</title>
+
+  <!-- Plot background -->
+  <rect x="70" y="30" width="460" height="200" fill="#fafafa" rx="2"/>
+
+  <!-- Horizontal grid lines (y_data = 0.5, 1.0, 1.5, 2.0) -->
+  <line x1="70" y1="184.5" x2="530" y2="184.5" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="70" y1="139.1" x2="530" y2="139.1" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="70" y1="93.6"  x2="530" y2="93.6"  stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="70" y1="48.2"  x2="530" y2="48.2"  stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Vertical grid lines (x_data = 0.25, 0.5, 0.75) -->
+  <line x1="185" y1="30" x2="185" y2="230" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="300" y1="30" x2="300" y2="230" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="415" y1="30" x2="415" y2="230" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Axes -->
+  <line x1="70" y1="230" x2="537" y2="230" stroke="#374151" stroke-width="1.5"/>
+  <line x1="70" y1="28"  x2="70"  y2="234" stroke="#374151" stroke-width="1.5"/>
+
+  <!-- Arrowheads -->
+  <polygon points="537,227 537,233 544,230" fill="#374151"/>
+  <polygon points="67,28 73,28 70,21"       fill="#374151"/>
+
+  <!-- X-axis ticks -->
+  <line x1="70"  y1="230" x2="70"  y2="237" stroke="#374151" stroke-width="1"/>
+  <line x1="185" y1="230" x2="185" y2="237" stroke="#374151" stroke-width="1"/>
+  <line x1="300" y1="230" x2="300" y2="237" stroke="#374151" stroke-width="1"/>
+  <line x1="415" y1="230" x2="415" y2="237" stroke="#374151" stroke-width="1"/>
+  <line x1="530" y1="230" x2="530" y2="237" stroke="#374151" stroke-width="1"/>
+
+  <!-- X-axis labels -->
+  <text x="70"  y="249" text-anchor="middle" font-size="11" fill="#6b7280">0</text>
+  <text x="185" y="249" text-anchor="middle" font-size="11" fill="#6b7280">0.25</text>
+  <text x="300" y="249" text-anchor="middle" font-size="11" fill="#6b7280">0.5</text>
+  <text x="415" y="249" text-anchor="middle" font-size="11" fill="#6b7280">0.75</text>
+  <text x="530" y="249" text-anchor="middle" font-size="11" fill="#6b7280">1</text>
+  <text x="300" y="268" text-anchor="middle" font-size="12" fill="#374151" font-style="italic">x / L</text>
+
+  <!-- Y-axis ticks -->
+  <line x1="64" y1="230"   x2="70" y2="230"   stroke="#374151" stroke-width="1"/>
+  <line x1="64" y1="184.5" x2="70" y2="184.5" stroke="#374151" stroke-width="1"/>
+  <line x1="64" y1="139.1" x2="70" y2="139.1" stroke="#374151" stroke-width="1"/>
+  <line x1="64" y1="93.6"  x2="70" y2="93.6"  stroke="#374151" stroke-width="1"/>
+  <line x1="64" y1="48.2"  x2="70" y2="48.2"  stroke="#374151" stroke-width="1"/>
+
+  <!-- Y-axis labels -->
+  <text x="59" y="234"   text-anchor="end" font-size="11" fill="#6b7280">0</text>
+  <text x="59" y="188.5" text-anchor="end" font-size="11" fill="#6b7280">0.5</text>
+  <text x="59" y="143.1" text-anchor="end" font-size="11" fill="#6b7280">1</text>
+  <text x="59" y="97.6"  text-anchor="end" font-size="11" fill="#6b7280">1.5</text>
+  <text x="59" y="52.2"  text-anchor="end" font-size="11" fill="#6b7280">2</text>
+
+  <!-- Y-axis title (rotated) -->
+  <text x="16" y="135" text-anchor="middle" font-size="11" fill="#374151" transform="rotate(-90,16,135)">|&#x03C8;&#x2099;(x)|&#xB2;</text>
+
+  <!-- Plot title -->
+  <text x="300" y="18" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Particle in a Box &#x2014; Probability Density |&#x03C8;&#x2099;(x)|&#xB2;</text>
+
+  <!--
+    Curves: y = 2·sin²(n·π·x) = 1 - cos(2n·π·x)
+    svgx = 70 + x·460,  svgy = 230 - y·90.909
+    21 points at x = 0, 0.05, 0.10, …, 1.00
+  -->
+
+  <!-- n=1 (blue): single arch, peak at x=0.5, y=2 -->
+  <polyline
+    points="70,230 93,225.6 116,212.6 139,192.6 162,167.2 185,139.1 208,111.0 231,85.6 254,65.6 277,52.7 300,48.2 323,52.7 346,65.6 369,85.6 392,111.0 415,139.1 438,167.2 461,192.6 484,212.6 507,225.6 530,230"
+    fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- n=2 (green): two arches, peaks at x=0.25 and x=0.75, node at x=0.5 -->
+  <polyline
+    points="70,230 93,212.6 116,167.2 139,111.0 162,65.6 185,48.2 208,65.6 231,111.0 254,167.2 277,212.6 300,230 323,212.6 346,167.2 369,111.0 392,65.6 415,48.2 438,65.6 461,111.0 484,167.2 507,212.6 530,230"
+    fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- n=3 (amber): three arches, nodes at x≈0.333 and x≈0.667 (inserted explicitly) -->
+  <polyline
+    points="70,230 93,192.6 116,111.0 139,52.7 162,65.6 185,139.1 208,212.6 223.2,230 231,225.6 254,167.2 277,85.6 300,48.2 323,85.6 346,167.2 369,225.6 376.8,230 392,212.6 415,139.1 438,65.6 461,52.7 484,111.0 507,192.6 530,230"
+    fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- Legend -->
+  <g transform="translate(120,287)">
+    <line x1="0"   y1="0" x2="24"  y2="0" stroke="#3B82F6" stroke-width="2.5"/>
+    <text x="29"  y="4" font-size="12" fill="#374151">n = 1</text>
+    <line x1="90"  y1="0" x2="114" y2="0" stroke="#10B981" stroke-width="2.5"/>
+    <text x="119" y="4" font-size="12" fill="#374151">n = 2</text>
+    <line x1="180" y1="0" x2="204" y2="0" stroke="#F59E0B" stroke-width="2.5"/>
+    <text x="209" y="4" font-size="12" fill="#374151">n = 3</text>
+  </g>
+</svg>
