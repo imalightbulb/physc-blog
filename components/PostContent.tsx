@@ -15,6 +15,11 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 // Custom renderers
 const components: Components = {
+  // Post pages already render the page title as H1 in the hero block.
+  // Demote markdown H1 to H2 to keep one semantic H1 per page.
+  h1(props) {
+    return <h2 {...props} />;
+  },
   // Prepend basePath to absolute image paths so static-export deploys work correctly
   img(props) {
     const src = typeof props.src === 'string' ? props.src : undefined;

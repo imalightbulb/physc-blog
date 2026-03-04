@@ -15,7 +15,12 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { name } = await params;
-  return { title: `Category: ${decodeURIComponent(name)}` };
+  return {
+    title: `Category: ${decodeURIComponent(name)}`,
+    alternates: {
+      canonical: `/category/${encodeURIComponent(name)}`,
+    },
+  };
 }
 
 export default async function CategoryPage({ params }: Props) {
@@ -26,7 +31,7 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         <div className="bg-white border-b border-gray-200 py-8">
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-sm text-blue-600 font-semibold uppercase tracking-wide mb-1">Category</div>

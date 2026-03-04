@@ -10,6 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, User, Clock } from 'lucide-react';
 import type { Metadata } from 'next';
+import { absoluteUrl } from '@/lib/site';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -19,9 +20,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return {};
+  const canonicalPath = `/blog/${post.slug}`;
+
   return {
     title: post.title,
     description: post.excerpt || undefined,
+    alternates: {
+      canonical: canonicalPath,
+    },
+    openGraph: {
+      type: 'article',
+      title: post.title,
+      description: post.excerpt || undefined,
+      url: absoluteUrl(canonicalPath),
+      images: post.cover_image
+        ? [{ url: post.cover_image, alt: post.title }]
+        : [{ url: absoluteUrl('/particle-in-box.svg'), alt: post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt || undefined,
+      images: post.cover_image ? [post.cover_image] : [absoluteUrl('/particle-in-box.svg')],
+    },
   };
 }
 
@@ -44,7 +65,7 @@ export default async function PostPage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         {/* Cover */}
         {post.cover_image ? (
           <div className="relative h-72 md:h-96 w-full">

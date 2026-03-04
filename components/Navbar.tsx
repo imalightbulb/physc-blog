@@ -41,14 +41,22 @@ export default function Navbar() {
           {/* Search */}
           <form onSubmit={handleSearch} className="hidden sm:flex items-center">
             <div className="relative">
+              <label htmlFor="navbar-search" className="sr-only">
+                Search posts
+              </label>
               <input
+                id="navbar-search"
                 type="text"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
                 placeholder="Search posts..."
                 className="w-48 pl-3 pr-8 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
-              <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600">
+              <button
+                type="submit"
+                aria-label="Search"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600"
+              >
                 <Search size={16} />
               </button>
             </div>
@@ -56,8 +64,12 @@ export default function Navbar() {
 
           {/* Mobile menu button */}
           <button
+            type="button"
             className="md:hidden text-gray-600 hover:text-gray-900"
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -65,7 +77,7 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="md:hidden py-3 border-t border-gray-100">
+          <div id="mobile-menu" className="md:hidden py-3 border-t border-gray-100">
             <nav className="flex flex-col gap-2 text-sm font-medium text-gray-700 mb-3">
               <Link href="/" className="hover:text-blue-600 py-1" onClick={() => setMenuOpen(false)}>Home</Link>
               <Link href="/blog" className="hover:text-blue-600 py-1" onClick={() => setMenuOpen(false)}>Blog</Link>
@@ -74,14 +86,22 @@ export default function Navbar() {
             </nav>
             <form onSubmit={handleSearch} className="flex items-center">
               <div className="relative flex-1">
+                <label htmlFor="mobile-navbar-search" className="sr-only">
+                  Search posts
+                </label>
                 <input
+                  id="mobile-navbar-search"
                   type="text"
                   value={query}
                   onChange={e => setQuery(e.target.value)}
                   placeholder="Search posts..."
                   className="w-full pl-3 pr-8 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
+                <button
+                  type="submit"
+                  aria-label="Search"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400"
+                >
                   <Search size={16} />
                 </button>
               </div>

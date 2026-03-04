@@ -7,10 +7,16 @@ import BlogCard from '@/components/BlogCard';
 import { getAllPosts, countPosts, getAllCategories, getAllTags } from '@/lib/posts';
 import Link from 'next/link';
 import TagBadge from '@/components/TagBadge';
+import type { Metadata } from 'next';
 
 const PER_PAGE = 12;
 
-export const metadata = { title: 'Blog' };
+export const metadata: Metadata = {
+  title: 'Blog',
+  alternates: {
+    canonical: '/blog',
+  },
+};
 
 interface SearchParams {
   page?: string;
@@ -30,7 +36,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   return (
     <>
       <Navbar />
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         <div className="bg-white border-b border-gray-200 py-8">
           <div className="max-w-6xl mx-auto px-4">
             <h1 className="text-3xl font-bold text-gray-900 font-serif">Physics Blog</h1>

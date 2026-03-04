@@ -4,6 +4,13 @@ import HeroSection from '@/components/HeroSection';
 import BlogCard from '@/components/BlogCard';
 import { getAllPosts } from '@/lib/posts';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 export default function HomePage() {
   const posts = getAllPosts({ published: true, limit: 7 });
@@ -12,7 +19,7 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         <HeroSection featuredPost={featuredPost} />
 
         <div className="max-w-6xl mx-auto px-4 py-12">
