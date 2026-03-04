@@ -87,28 +87,7 @@ One of the first quantum systems students encounter is the **particle in a box**
 
 $$\\psi_n(x) = \\sqrt{\\frac{2}{L}}\\sin\\!\\left(\\frac{n\\pi x}{L}\\right)$$
 
-The corresponding probability density |ψₙ(x)|² describes where the particle is most likely to be found. The Python code below computes and plots these distributions:
-
-\`\`\`python
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Particle in a box — probability density
-def prob_density(n, x, L=1.0):
-    return (2 / L) * np.sin(n * np.pi * x / L) ** 2
-
-x = np.linspace(0, 1, 1000)
-for n in range(1, 4):
-    plt.plot(x, prob_density(n, x), label=f'n={n}')
-
-plt.xlabel('Position (x/L)')
-plt.ylabel('Probability density |ψ|²')
-plt.legend()
-plt.title('Particle in a Box')
-plt.show()
-\`\`\`
-
-The graph below shows the first three eigenstates. Notice how higher quantum numbers introduce more nodes (zeros) in the probability density:
+The corresponding probability density |ψₙ(x)|² describes where the particle is most likely to be found. The graph below shows the first three eigenstates. Notice how higher quantum numbers introduce more nodes (zeros) in the probability density:
 
 ![Particle in a Box — Probability Density](/particle-in-box.svg)
 
@@ -187,15 +166,7 @@ Amirah's project, titled *"Precision Photometry for Exoplanet Transit Detection 
 
 ### Methodology
 
-The transit method works by detecting the tiny dip in a star's brightness when a planet passes in front of it:
-
-\`\`\`
-Stellar flux: ████████████████████████████████
-                                ↓ planet transit
-Transit:      ████████████░░░░░░░████████████
-
-Relative flux: 1.0, 1.0, ..., 0.98, ..., 1.0
-\`\`\`
+The transit method works by detecting the tiny dip in a star's brightness when a planet passes in front of it. As the planet crosses the stellar disk, it blocks a small fraction of the star's light, producing a characteristic dip in the light curve that repeats with the planet's orbital period.
 
 Amirah successfully detected a transit of **HAT-P-7b**, a hot Jupiter with an orbital period of approximately 2.2 days. Her light curve showed:
 

@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    // AI assistant (required for the workflow described in README)
+    "Continue.continue",
+
+    // TypeScript / Next.js essentials
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+
+    // Nice to have
+    "streetsidesoftware.code-spell-checker"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  // ── Editor ────────────────────────────────────────────────────────────────
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.rulers": [100],
+
+  // ── TypeScript ────────────────────────────────────────────────────────────
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // ── Tailwind ─────────────────────────────────────────────────────────────
+  "tailwindCSS.experimental.classRegex": [
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+
+  // ── Files ─────────────────────────────────────────────────────────────────
+  "files.exclude": {
+    "**/.next": true,
+    "**/out": true,
+    "**/node_modules": true
+  },
+
+  // ── Continue ──────────────────────────────────────────────────────────────
+  // Continue reads its config from .continue/config.yaml in this workspace.
+  // Open the Continue panel:  Ctrl+L  (chat)  |  Ctrl+I  (inline edit)
+  // Switch models: click the model name in the bottom-left of the chat panel.
+  //
+  // Keyboard shortcuts (defaults — customise in keybindings.json):
+  //   Ctrl+L          Open/focus chat
+  //   Ctrl+I          Inline edit (select code first)
+  //   Ctrl+Shift+R    /review on selection
+  //   Ctrl+Shift+P    → "Continue: ..." for all commands
+
+  // ── Terminal ──────────────────────────────────────────────────────────────
+  "terminal.integrated.env.linux": {
+    // Continue reads these from the integrated terminal's environment.
+    // Set ANTHROPIC_API_KEY and OPENAI_API_KEY in your shell profile instead
+    // of here — shell profile values are inherited automatically.
+  }
+}

@@ -1,0 +1,76 @@
+name: XMUM Physics Blog
+version: 1.0.0
+schema: v1
+
+# ── Models ────────────────────────────────────────────────────────────────────
+# Two models in the chat dropdown. Switch via the model selector (bottom-left of
+# the Continue panel or Ctrl+L then click the model name).
+#
+#  Claude  → best for planning, reviewing, and understanding architecture
+#  GPT-4o  → best for inline edits, generate-and-apply, and implementation
+#
+# API keys are read from environment variables — never committed.
+# Set them in your shell profile or a gitignored .env file:
+#   export ANTHROPIC_API_KEY=sk-ant-...
+#   export OPENAI_API_KEY=sk-...
+
+models:
+  - name: Claude Sonnet 4.6 (Chat / Review)
+    provider: anthropic
+    model: claude-sonnet-4-6
+    apiKey: ${{ secrets.ANTHROPIC_API_KEY }}
+    roles:
+      - chat
+    defaultCompletionOptions:
+      promptCaching: true   # reduces cost on repeated system messages
+
+  - name: GPT-4o (Implement / Edit)
+    provider: openai
+    model: gpt-4o
+    apiKey: ${{ secrets.OPENAI_API_KEY }}
+    roles:
+      - chat
+      - edit
+      - apply
+
+# ── Context providers ─────────────────────────────────────────────────────────
+# These are available as @-mentions in the chat (e.g. @codebase, @diff)
+context:
+  - provider: code       # @file / @code — highlight a specific symbol
+  - provider: docs       # @docs — indexed documentation
+  - provider: diff       # @diff — current git diff
+  - provider: terminal   # @terminal — last terminal output
+  - provider: problems   # @problems — VS Code diagnostics
+  - provider: folder     # @folder — all files in a directory
+  - provider: codebase   # @codebase — semantic search across the whole repo
+
+# ── Slash commands ────────────────────────────────────────────────────────────
+prompts:
+  - name: review
+    description: Review selected code for bugs, security, and style
+    prompt: |
+      Review the following code. Check for:
+      1. Security issues (XSS, injection, auth bypasses, exposed secrets)
+      2. TypeScript correctness (missing types, unsafe casts, runtime errors)
+      3. Logic errors or edge cases
+      4. Performance concerns
+      5. Compliance with the project conventions in AGENT_RULES.md
+
+      Be concise. List issues with severity: 🔴 critical / 🟡 warning / 🔵 suggestion.
+
+  - name: plan
+    description: Plan a task — identify files, approach, and risks without writing code
+    prompt: |
+      Plan this task without writing any code. Identify:
+      1. Which files will change and why
+      2. The approach / algorithm
+      3. Edge cases or risks to watch for
+      4. Any new dependencies needed
+
+      Output a numbered checklist that can be reviewed before implementation starts.
+
+  - name: explain
+    description: Explain selected code in plain language
+    prompt: |
+      Explain the selected code in plain language suitable for a physics student
+      who understands web basics but not advanced JavaScript. Be concise.

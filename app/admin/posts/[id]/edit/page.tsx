@@ -3,7 +3,11 @@ import { getPostById, getAllPosts } from '@/lib/posts';
 import PostFormWrapper from './PostFormWrapper';
 import type { Metadata } from 'next';
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
+  // Don't generate admin edit pages in static export (admin is server-only)
+  if (process.env.STATIC_EXPORT === 'true') return [];
   const posts = getAllPosts({});
   return posts.map(p => ({ id: String(p.id) }));
 }

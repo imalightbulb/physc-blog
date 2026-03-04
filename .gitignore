@@ -30,8 +30,13 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files — commit only .env.example, never the real values
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+!.env.example
 
 # vercel
 .vercel
@@ -42,6 +47,9 @@ next-env.d.ts
 
 # Claude Code local settings (machine-specific, not for version control)
 .claude/settings.local.json
+
+# Continue local overrides (machine-specific; global config lives in ~/.continue/)
+.continue/config.local.yaml
 
 # SQLite database (auto-created from seed on first run — do not commit)
 *.db

@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 
 export async function generateStaticParams() {
   const categories = getAllCategories();
-  return categories.map(c => ({ name: encodeURIComponent(c) }));
+  return categories.map(c => ({ name: c }));
 }
 
 interface Props {

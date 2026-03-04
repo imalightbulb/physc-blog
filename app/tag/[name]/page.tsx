@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 
 export async function generateStaticParams() {
   const tags = getAllTags();
-  return tags.map(t => ({ name: encodeURIComponent(t) }));
+  return tags.map(t => ({ name: t }));
 }
 
 interface Props {

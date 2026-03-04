@@ -5,8 +5,14 @@ import { verifyJWT } from '@/lib/auth';
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Protect all /admin/* routes except /admin/login
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+  // Forward the pathname to layouts/pages via a custom header.
+  // This lets the admin layout know which page is being rendered without
+  // needing a client-side hook.
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-pathname', pathname);
+
+  // Protect all /admin routes except /admin/login (handles trailing slash too)
+  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
     const token = request.cookies.get('admin_token')?.value;
 
     if (!token) {
@@ -21,9 +27,10 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  return NextResponse.next({ request: { headers: requestHeaders } });
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  // /admin(.*) catches /admin, /admin/, /admin/posts, /admin/login, etc.
+  matcher: ['/admin(.*)'],
 };
