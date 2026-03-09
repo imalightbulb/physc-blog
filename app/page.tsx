@@ -6,7 +6,7 @@ import { getAllPosts } from '@/lib/posts';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import ParticleFallback from '@/components/ParticleFallback';
-import { ArrowRight, GraduationCap, Microscope, Users2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   alternates: {
@@ -68,37 +68,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="section-space">
-          <div className="section-shell">
-            <div className="mb-8 max-w-3xl">
-              <p className="eyebrow">Explore XMUM Physics</p>
-              <h2 className="mt-3 text-3xl font-bold text-text font-serif">Three fast ways to understand the department.</h2>
-            </div>
-            <div className="grid gap-5 md:grid-cols-3">
-              <Link href="/about" className="surface-elevated group rounded-[1.75rem] p-6 transition hover:-translate-y-1">
-                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-surface-3 text-accent"><GraduationCap size={20} /></div>
-                <p className="eyebrow mb-3">Study Physics</p>
-                <h3 className="mb-3 text-xl font-semibold text-text font-serif">Programmes, mission, and student outcomes.</h3>
-                <p className="text-sm leading-relaxed text-muted">See how the department frames its teaching, facilities, accreditation context, and graduate pathways.</p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent">Open About <ArrowRight size={15} /></span>
-              </Link>
-              <Link href="/faculty" className="surface-elevated group rounded-[1.75rem] p-6 transition hover:-translate-y-1">
-                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-surface-3 text-accent"><Users2 size={20} /></div>
-                <p className="eyebrow mb-3">Meet the Faculty</p>
-                <h3 className="mb-3 text-xl font-semibold text-text font-serif">Browse the people behind the research and teaching.</h3>
-                <p className="text-sm leading-relaxed text-muted">Explore faculty profiles, research tags, and areas spanning theory, experiment, photonics, and quantum science.</p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent">View Faculty <ArrowRight size={15} /></span>
-              </Link>
-              <Link href="/category/Research" className="surface-elevated group rounded-[1.75rem] p-6 transition hover:-translate-y-1">
-                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-surface-3 text-accent"><Microscope size={20} /></div>
-                <p className="eyebrow mb-3">Research and Talks</p>
-                <h3 className="mb-3 text-xl font-semibold text-text font-serif">Follow publications, seminars, and department updates.</h3>
-                <p className="text-sm leading-relaxed text-muted">Use the site as an editorial archive for current work, student achievements, and invited talks.</p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent">Browse Archive <ArrowRight size={15} /></span>
-              </Link>
-            </div>
-          </div>
-        </section>
 
         <section className="section-space pt-0">
           <div className="section-shell">

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Merriweather } from 'next/font/google';
 import { absoluteUrl, getSiteName, getSiteUrl } from '@/lib/site';
 import './globals.css';
@@ -21,6 +21,10 @@ const merriweather = Merriweather({
   display: 'swap',
   variable: '--font-merriweather',
 });
+
+export const viewport: Viewport = {
+  themeColor: '#163663',
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),

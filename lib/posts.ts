@@ -15,8 +15,10 @@ export interface Post {
   tags: string[];
   published: boolean;
   featured: boolean;
+  is_page: boolean;
   date: string;
   portrait_focus: 'top' | 'center' | 'bottom';
+  email: string | null;
 }
 
 function parsePost(filename: string): Post {
@@ -34,9 +36,14 @@ function parsePost(filename: string): Post {
     tags: Array.isArray(data.tags) ? data.tags : [],
     published: data.published === true,
     featured: data.featured === true,
+    is_page: data.is_page === true,
     date: data.date ?? '',
     portrait_focus:
       data.portrait_focus === 'top' || data.portrait_focus === 'bottom' ? data.portrait_focus : 'center',
+    email: (() => {
+      const m = content.match(/\*\*Email:\*\*\s*([^\s\n<]+)/);
+      return m ? m[1] : null;
+    })(),
   };
 }
 
@@ -57,6 +64,9 @@ export function getAllPosts(options: {
   offset?: number;
 } = {}): Post[] {
   let posts = readAllPosts();
+
+  // Exclude is_page posts from regular listings (getPostBySlug bypasses this)
+  posts = posts.filter(p => !p.is_page);
 
   if (options.published !== undefined) {
     posts = posts.filter(p => p.published === options.published);
@@ -113,6 +123,32 @@ export function getAdjacentPosts(currentSlug: string): { prev: Post | null; next
     prev: published[i + 1] ?? null,
     next: published[i - 1] ?? null,
   };
+}
+
+export interface TocHeading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+export function extractHeadings(content: string): TocHeading[] {
+  const lines = content.split('\n');
+  const headings: TocHeading[] = [];
+  for (const line of lines) {
+    const m = line.match(/^(#{2,3})\s+(.+)/);
+    if (!m) continue;
+    const level = m[1].length;
+    const text = m[2].trim();
+    // Replicate rehype-slug: lowercase, strip non-alphanumeric except spaces/hyphens, replace spaces with hyphens
+    const id = text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+    headings.push({ id, text, level });
+  }
+  return headings;
 }
 
 export function getAllCategories(): string[] {

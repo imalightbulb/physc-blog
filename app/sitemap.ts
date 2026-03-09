@@ -34,12 +34,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const categoryRoutes: MetadataRoute.Sitemap = getAllCategories().map(category => ({
-    url: absoluteUrl(`/category/${encodeURIComponent(category)}`),
-    lastModified: now,
-    changeFrequency: 'weekly',
-    priority: 0.6,
-  }));
+  const HIDDEN_CATEGORIES = new Set(['Research']);
+  const categoryRoutes: MetadataRoute.Sitemap = getAllCategories()
+    .filter(c => !HIDDEN_CATEGORIES.has(c))
+    .map(category => ({
+      url: absoluteUrl(`/category/${encodeURIComponent(category)}`),
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.6,
+    }));
 
   // Tags use real URL paths (/ is a real separator, not encoded)
   const tagRoutes: MetadataRoute.Sitemap = getAllTags().map(tag => ({

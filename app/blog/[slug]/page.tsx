@@ -4,13 +4,15 @@ import Footer from '@/components/Footer';
 import PostContent from '@/components/PostContent';
 import TagBadge from '@/components/TagBadge';
 import BlogCard from '@/components/BlogCard';
-import { getPostBySlug, getAdjacentPosts, getAllPosts } from '@/lib/posts';
+import { getPostBySlug, getAdjacentPosts, getAllPosts, extractHeadings } from '@/lib/posts';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, User, Clock, ArrowLeft, ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/site';
+import ReadingProgress from '@/components/ReadingProgress';
+import TableOfContents from '@/components/TableOfContents';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -61,9 +63,11 @@ export default async function PostPage({ params }: Props) {
   const wordCount = post.content.split(/\s+/).length;
   const readTime = Math.max(1, Math.round(wordCount / 200));
   const { prev, next } = getAdjacentPosts(post.slug);
+  const headings = extractHeadings(post.content);
 
   return (
     <>
+      <ReadingProgress />
       <Navbar />
       <main id="main-content" className="flex-1">
         {/* Cover */}
@@ -113,10 +117,12 @@ export default async function PostPage({ params }: Props) {
                   <User size={15} className="text-border" />
                   {post.author}
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <Calendar size={15} className="text-border" />
-                  {formattedDate}
-                </span>
+                {post.category !== 'Staff' && (
+                  <span className="flex items-center gap-1.5">
+                    <Calendar size={15} className="text-border" />
+                    {formattedDate}
+                  </span>
+                )}
                 <span className="flex items-center gap-1.5">
                   <Clock size={15} className="text-border" />
                   {readTime} min read
@@ -146,8 +152,9 @@ export default async function PostPage({ params }: Props) {
             </div>
 
             <aside className="space-y-4">
+              {headings.length > 0 && <TableOfContents headings={headings} />}
               {post.tags.length > 0 && (
-                <div className="surface-muted sticky top-24 rounded-[1.75rem] p-5">
+                <div className="surface-muted rounded-[1.75rem] p-5">
                   <p className="eyebrow mb-3">Article Tags</p>
                   <div className="flex flex-wrap gap-1.5">
                     {post.tags.map(tag => <TagBadge key={tag} tag={tag} />)}

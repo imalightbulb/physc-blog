@@ -15,8 +15,10 @@ const DISPLAY_NAMES: Record<string, string> = {
   Department: 'Department',
 };
 
+const HIDDEN_CATEGORIES = new Set(['Research']);
+
 export async function generateStaticParams() {
-  const categories = getAllCategories();
+  const categories = getAllCategories().filter(c => !HIDDEN_CATEGORIES.has(c));
   return categories.map(c => ({ name: c }));
 }
 

@@ -8,6 +8,7 @@ tags:
   - department
 cover_image: "/images/about-department/image1.png"
 published: true
+is_page: true
 date: "2022-01-01"
 ---
 

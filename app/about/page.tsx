@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import PostContent from '@/components/PostContent';
-import { getPostBySlug } from '@/lib/posts';
+import TableOfContents from '@/components/TableOfContents';
+import { getPostBySlug, extractHeadings } from '@/lib/posts';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/site';
@@ -29,9 +30,20 @@ export const metadata: Metadata = {
   },
 };
 
+const LAB_PHOTOS = [
+  { src: '/images/lab/Labpic18.png', alt: 'Physics laboratory' },
+  { src: '/images/lab/Labpic17.png', alt: 'Lab equipment and setup' },
+  { src: '/images/lab/Labpic10.png', alt: 'Research laboratory' },
+  { src: '/images/lab/Labpic7.png', alt: 'Experimental physics lab' },
+  { src: '/images/lab/Labpic5.png', alt: 'Physics teaching lab' },
+  { src: '/images/lab/1727083747708.jpg', alt: 'Department facilities' },
+];
+
 export default function AboutPage() {
   const post = getPostBySlug('about-department');
   if (!post) notFound();
+
+  const headings = extractHeadings(post.content);
 
   return (
     <>
@@ -48,7 +60,7 @@ export default function AboutPage() {
                   {post.title}
                 </h1>
                 <p className="mt-4 max-w-2xl text-sm leading-relaxed text-blue-100 md:text-base">
-                  An editorial overview of the department’s mission, programmes, facilities, accreditation context, and student outcomes.
+                  An editorial overview of the department's mission, programmes, facilities, accreditation context, and student outcomes.
                 </p>
               </div>
             </div>
@@ -61,7 +73,7 @@ export default function AboutPage() {
                 {post.title}
               </h1>
               <p className="mt-4 max-w-2xl text-sm leading-relaxed text-blue-100 md:text-base">
-                An editorial overview of the department’s mission, programmes, facilities, accreditation context, and student outcomes.
+                An editorial overview of the department's mission, programmes, facilities, accreditation context, and student outcomes.
               </p>
             </div>
           </div>
@@ -69,20 +81,44 @@ export default function AboutPage() {
 
         <div className="section-shell section-space grid gap-10 lg:grid-cols-[14rem_minmax(0,1fr)]">
           <aside className="hidden lg:block">
-            <div className="surface-muted sticky top-24 rounded-[1.75rem] p-5">
-              <p className="eyebrow mb-3">On This Page</p>
-              <ul className="space-y-2 text-sm text-muted">
-                <li>Overview</li>
-                <li>Mission</li>
-                <li>Facilities</li>
-                <li>Outcomes</li>
-                <li>Accreditation</li>
-                <li>Programmes</li>
-              </ul>
-            </div>
+            {headings.length > 0 ? (
+              <TableOfContents headings={headings} />
+            ) : (
+              <div className="surface-muted sticky top-24 rounded-[1.75rem] p-5">
+                <p className="eyebrow mb-3">On This Page</p>
+                <ul className="space-y-2 text-sm text-muted">
+                  <li>Overview</li>
+                  <li>Mission</li>
+                  <li>Facilities</li>
+                  <li>Outcomes</li>
+                  <li>Accreditation</li>
+                  <li>Programmes</li>
+                </ul>
+              </div>
+            )}
           </aside>
-          <div className="surface-elevated animate-fade-in rounded-[2rem] p-6 md:p-10">
-            <PostContent content={post.content} />
+          <div>
+            <div className="surface-elevated animate-fade-in rounded-[2rem] p-6 md:p-10">
+              <PostContent content={post.content} />
+            </div>
+
+            {/* Lab photo gallery */}
+            <div className="mt-10">
+              <p className="eyebrow mb-4">Lab &amp; Facilities Gallery</p>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {LAB_PHOTOS.map(photo => (
+                  <div key={photo.src} className="relative aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-surface-2">
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                      sizes="(max-width: 640px) 50vw, 33vw"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </main>

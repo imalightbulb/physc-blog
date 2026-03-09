@@ -4,6 +4,7 @@ import TagBadge from '@/components/TagBadge';
 import { getAllPosts } from '@/lib/posts';
 import Image from 'next/image';
 import Link from 'next/link';
+import FacultyEmailLink from '@/components/FacultyEmailLink';
 import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/site';
 import ParticleFallback from '@/components/ParticleFallback';
@@ -110,6 +111,7 @@ export default function FacultyPage() {
                         ))}
                       </div>
                     )}
+                    {member.email && <FacultyEmailLink email={member.email} name={name} />}
                   </div>
                 </Link>
               );
