@@ -33,18 +33,18 @@ export default async function TagPage({ params }: Props) {
     <>
       <Navbar />
       <main id="main-content" className="flex-1">
-        <div className="border-b border-border bg-surface py-8">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="mb-1 text-sm font-semibold uppercase tracking-wide text-accent">Tag</div>
-            <h1 className="text-3xl font-bold text-text font-serif">#{tag}</h1>
-            <p className="mt-1 text-sm text-muted">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+        <div className="page-header">
+          <div className="page-header__inner">
+            <div className="eyebrow">Tag</div>
+            <h1 className="section-title mt-3">#{tag}</h1>
+            <p className="section-kicker">{posts.length} {posts.length === 1 ? 'post' : 'posts'} connected to this topic across faculty, research, talks, and department updates.</p>
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="section-shell section-space">
           {posts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {posts.map(post => <BlogCard key={post.slug} post={post} />)}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {posts.map((post, index) => <BlogCard key={post.slug} post={post} variant={index === 0 ? 'featured' : 'default'} />)}
             </div>
           ) : (
             <div className="py-16 text-center text-muted">

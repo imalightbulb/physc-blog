@@ -44,19 +44,29 @@ function physicsAreaTags(tags: string[]): string[] {
 
 export default function FacultyPage() {
   const faculty = getAllPosts({ published: true, category: 'Staff' });
+  const researchAreas = new Set(faculty.flatMap(member => physicsAreaTags(member.tags)).map(tag => tag.split('/')[0]));
 
   return (
     <>
       <Navbar />
       <main id="main-content" className="flex-1">
-        <div className="border-b border-border bg-surface py-8">
-          <div className="max-w-6xl mx-auto px-4">
-            <h1 className="text-3xl font-bold text-text font-serif">Faculty</h1>
-            <p className="mt-1 text-sm text-muted">{faculty.length} members</p>
+        <div className="page-header">
+          <div className="page-header__inner">
+            <p className="eyebrow">Faculty</p>
+            <h1 className="section-title mt-3">Faculty and research leadership.</h1>
+            <p className="section-kicker">Browse the academics shaping teaching, publications, talks, and interdisciplinary research across XMUM Physics.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <span className="rounded-full border border-primary/10 bg-white px-3 py-1 text-sm font-medium text-primary shadow-sm">{faculty.length} faculty members</span>
+              <span className="rounded-full border border-primary/10 bg-white px-3 py-1 text-sm font-medium text-primary shadow-sm">{researchAreas.size} top-level research areas</span>
+              <span className="rounded-full border border-primary/10 bg-white px-3 py-1 text-sm font-medium text-primary shadow-sm">Theory and experiment</span>
+            </div>
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 py-10">
+        <div className="section-shell section-space">
+          <div className="mb-8 max-w-3xl">
+            <p className="text-sm leading-relaxed text-muted">Tags below indicate broad research areas associated with each profile and are meant to help first-time visitors navigate the department’s academic strengths.</p>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {faculty.map(member => {
               const name = extractName(member.title);
@@ -65,10 +75,10 @@ export default function FacultyPage() {
                 <Link
                   key={member.slug}
                   href={`/blog/${member.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/8"
+                  className="group flex flex-col overflow-hidden rounded-[1.8rem] border border-border bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/8"
                 >
                   {/* Photo */}
-                  <div className="relative h-56 w-full overflow-hidden bg-bg">
+                  <div className="relative aspect-[4/4.6] w-full overflow-hidden bg-surface-2">
                     {member.cover_image ? (
                       <Image
                         src={member.cover_image}
@@ -89,12 +99,12 @@ export default function FacultyPage() {
                   </div>
 
                   {/* Info */}
-                  <div className="p-4 flex flex-col flex-1">
-                    <h2 className="font-semibold text-text font-serif leading-snug transition-colors group-hover:text-accent">
+                  <div className="flex flex-1 flex-col p-5">
+                    <h2 className="text-lg font-semibold text-text font-serif leading-snug transition-colors group-hover:text-accent">
                       {name}
                     </h2>
                     {areaTags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-3">
+                      <div className="mt-4 flex flex-wrap gap-1.5">
                         {areaTags.slice(0, 3).map(tag => (
                           <TagBadge key={tag} tag={tag} clickable={false} />
                         ))}

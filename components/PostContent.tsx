@@ -35,7 +35,7 @@ const components: Components = {
 
 export default function PostContent({ content }: PostContentProps) {
   return (
-    <div className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-text prose-strong:text-text prose-a:text-accent prose-code:text-primary prose-code:bg-accent-soft prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary-deep prose-pre:text-white prose-blockquote:border-accent prose-blockquote:text-muted prose-li:text-text prose-p:text-text">
+    <div className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-text prose-headings:scroll-mt-24 prose-h2:mt-12 prose-h2:border-t prose-h2:border-border prose-h2:pt-8 prose-h3:mt-10 prose-h3:text-[1.35rem] prose-p:leading-8 prose-p:text-text prose-strong:text-text prose-a:text-accent prose-a:decoration-accent/35 prose-a:underline-offset-4 prose-code:text-primary prose-code:bg-accent-soft prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-pre:bg-primary-deep prose-pre:text-white prose-blockquote:border-accent prose-blockquote:bg-surface-2 prose-blockquote:py-1 prose-blockquote:text-muted prose-li:text-text prose-ul:space-y-2 prose-ol:space-y-2">
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeHighlight, rehypeSlug, rehypeKatex]}

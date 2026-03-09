@@ -8,7 +8,7 @@ import { getPostBySlug, getAdjacentPosts, getAllPosts } from '@/lib/posts';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, User, Clock } from 'lucide-react';
+import { Calendar, User, Clock, ArrowLeft, ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/site';
 
@@ -68,86 +68,94 @@ export default async function PostPage({ params }: Props) {
       <main id="main-content" className="flex-1">
         {/* Cover */}
         {post.cover_image ? (
-          <div className="relative h-72 md:h-96 w-full">
+          <div className="relative h-[24rem] w-full md:h-[31rem]">
             <Image src={post.cover_image} alt={post.title} fill className="object-cover" priority />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6 max-w-4xl mx-auto">
-              {post.category && (
-                <Link href={`/category/${encodeURIComponent(post.category)}`}
-                  className="text-blue-300 text-sm font-semibold uppercase tracking-wide mb-2 block hover:text-blue-200"
-                >
-                  {post.category}
-                </Link>
-              )}
-              <h1 className="text-3xl md:text-4xl font-bold text-white font-serif leading-tight">
-                {post.title}
-              </h1>
+            <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/72 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-6">
+              <div className="mx-auto max-w-5xl">
+                {post.category && (
+                  <Link href={`/category/${encodeURIComponent(post.category)}`}
+                    className="eyebrow mb-3 block !text-accent-soft hover:!text-white"
+                  >
+                    {post.category}
+                  </Link>
+                )}
+                <h1 className="max-w-3xl text-4xl font-bold text-white font-serif leading-tight md:text-5xl">
+                  {post.title}
+                </h1>
+                {post.excerpt && <p className="mt-4 max-w-2xl text-sm leading-relaxed text-blue-100 md:text-base">{post.excerpt}</p>}
+              </div>
             </div>
           </div>
         ) : (
-          <div className="bg-gradient-to-br from-primary to-primary-deep py-16 px-4">
-            <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-primary to-primary-deep px-4 py-20">
+            <div className="mx-auto max-w-5xl">
               {post.category && (
                 <Link href={`/category/${encodeURIComponent(post.category)}`}
-                  className="text-blue-300 text-sm font-semibold uppercase tracking-wide mb-3 block hover:text-blue-200"
+                  className="eyebrow mb-3 block !text-accent-soft hover:!text-white"
                 >
                   {post.category}
                 </Link>
               )}
-              <h1 className="text-3xl md:text-4xl font-bold text-white font-serif leading-tight">
+              <h1 className="max-w-3xl text-4xl font-bold text-white font-serif leading-tight md:text-5xl">
                 {post.title}
               </h1>
+              {post.excerpt && <p className="mt-4 max-w-2xl text-sm leading-relaxed text-blue-100 md:text-base">{post.excerpt}</p>}
             </div>
           </div>
         )}
 
-        <div className="max-w-4xl mx-auto px-4 py-8 animate-fade-in">
-          {/* Meta */}
-          <div className="mb-8 flex flex-wrap items-center gap-4 border-b border-border pb-6 text-sm text-muted">
-            <span className="flex items-center gap-1.5">
-              <User size={15} className="text-border" />
-              {post.author}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Calendar size={15} className="text-border" />
-              {formattedDate}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Clock size={15} className="text-border" />
-              {readTime} min read
-            </span>
-          </div>
-
-          {/* Content */}
-          <PostContent content={post.content} />
-
-          {/* Tags */}
-          {post.tags.length > 0 && (
-            <div className="mt-10 border-t border-border pt-6">
-              <span className="mr-2 text-sm font-medium text-text">Tags:</span>
-              <div className="inline-flex flex-wrap gap-1.5">
-                {post.tags.map(tag => <TagBadge key={tag} tag={tag} />)}
+        <div className="section-shell section-space animate-fade-in">
+          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
+            <div className="min-w-0">
+              <div className="surface-muted mb-8 flex flex-wrap items-center gap-4 rounded-[1.5rem] p-5 text-sm text-muted">
+                <span className="flex items-center gap-1.5">
+                  <User size={15} className="text-border" />
+                  {post.author}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Calendar size={15} className="text-border" />
+                  {formattedDate}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Clock size={15} className="text-border" />
+                  {readTime} min read
+                </span>
               </div>
-            </div>
-          )}
 
-          {/* Prev/Next */}
-          {(prev || next) && (
-            <div className="mt-10 grid grid-cols-1 gap-4 border-t border-border pt-6 md:grid-cols-2">
-              {prev && (
-                <Link href={`/blog/${prev.slug}`} className="group rounded-xl border border-border bg-surface p-4 transition-colors hover:border-accent">
-                  <div className="mb-1 text-xs text-muted">← Previous</div>
-                  <div className="line-clamp-2 text-sm font-medium text-text font-serif group-hover:text-accent">{prev.title}</div>
-                </Link>
-              )}
-              {next && (
-                <Link href={`/blog/${next.slug}`} className="group ml-auto w-full rounded-xl border border-border bg-surface p-4 transition-colors hover:border-accent md:text-right">
-                  <div className="mb-1 text-xs text-muted">Next →</div>
-                  <div className="line-clamp-2 text-sm font-medium text-text font-serif group-hover:text-accent">{next.title}</div>
-                </Link>
+              <div className="surface-elevated rounded-[2rem] p-6 md:p-10">
+                <PostContent content={post.content} />
+              </div>
+
+              {(prev || next) && (
+                <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
+                  {prev && (
+                    <Link href={`/blog/${prev.slug}`} className="group rounded-[1.5rem] border border-border bg-surface p-5 transition-colors hover:border-accent">
+                      <div className="mb-2 inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-muted"><ArrowLeft size={14} /> Previous</div>
+                      <div className="line-clamp-2 text-sm font-medium text-text font-serif group-hover:text-accent">{prev.title}</div>
+                    </Link>
+                  )}
+                  {next && (
+                    <Link href={`/blog/${next.slug}`} className="group ml-auto w-full rounded-[1.5rem] border border-border bg-surface p-5 transition-colors hover:border-accent md:text-right">
+                      <div className="mb-2 inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-muted md:ml-auto">Next <ArrowRight size={14} /></div>
+                      <div className="line-clamp-2 text-sm font-medium text-text font-serif group-hover:text-accent">{next.title}</div>
+                    </Link>
+                  )}
+                </div>
               )}
             </div>
-          )}
+
+            <aside className="space-y-4">
+              {post.tags.length > 0 && (
+                <div className="surface-muted sticky top-24 rounded-[1.75rem] p-5">
+                  <p className="eyebrow mb-3">Article Tags</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {post.tags.map(tag => <TagBadge key={tag} tag={tag} />)}
+                  </div>
+                </div>
+              )}
+            </aside>
+          </div>
         </div>
       </main>
       <Footer />

@@ -75,18 +75,20 @@ export default function NavbarClient({ searchIndex }: NavbarClientProps) {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/80 bg-white/90 shadow-sm backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-border/80 bg-white/92 shadow-sm backdrop-blur">
       <div className="mx-auto max-w-6xl px-4">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-            <Atom className="text-accent" size={28} />
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-primary/10 bg-surface-3 text-accent">
+              <Atom size={22} />
+            </div>
             <div className="hidden sm:block">
-              <div className="text-base font-bold leading-tight text-primary font-serif">XMUM Physics</div>
-              <div className="text-xs text-muted">Department Blog</div>
+              <div className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-accent">Xiamen University Malaysia</div>
+              <div className="text-base font-bold leading-tight text-primary font-serif">Department of Physics</div>
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-text">
+          <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-text">
             <Link href="/about" className="transition-colors hover:text-accent">About</Link>
             <Link href="/faculty" className="transition-colors hover:text-accent">Faculty</Link>
             <Link href="/category/Events" className="transition-colors hover:text-accent">Talks</Link>
@@ -104,17 +106,17 @@ export default function NavbarClient({ searchIndex }: NavbarClientProps) {
               value={query}
               onChange={e => setQuery(e.target.value)}
               placeholder="Search posts..."
-              className="w-52 rounded-lg border border-border bg-surface py-1.5 pl-3 pr-8 text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              className="w-56 rounded-full border border-border bg-surface-2 py-2 pl-4 pr-10 text-sm text-text shadow-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
             />
             <button
               type="submit"
               aria-label="Search"
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-muted hover:text-accent"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-accent"
             >
               <Search size={16} />
             </button>
             {query.trim().length >= 2 && (
-              <div className="absolute right-0 top-[calc(100%+0.5rem)] w-80 overflow-hidden rounded-2xl border border-border bg-surface shadow-xl">
+              <div className="surface-elevated absolute right-0 top-[calc(100%+0.75rem)] w-80 overflow-hidden rounded-3xl bg-surface">
                 {results.length > 0 ? (
                   <ul className="py-2">
                     {results.map(result => (
@@ -122,16 +124,16 @@ export default function NavbarClient({ searchIndex }: NavbarClientProps) {
                         <button
                           type="button"
                           onClick={() => handleResultClick(result.slug)}
-                          className="block w-full px-4 py-2 text-left transition-colors hover:bg-bg"
+                          className="block w-full px-4 py-3 text-left transition-colors hover:bg-surface-2"
                         >
-                          <div className="text-sm font-medium text-text">{result.title}</div>
-                          {result.category && <div className="text-xs text-muted">{result.category}</div>}
+                          {result.category && <div className="eyebrow mb-1 text-[10px]">{result.category}</div>}
+                          <div className="text-sm font-medium leading-snug text-text">{result.title}</div>
                         </button>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <div className="px-4 py-3 text-sm text-muted">No matching posts.</div>
+                  <div className="px-4 py-4 text-sm text-muted">No matching posts.</div>
                 )}
               </div>
             )}
@@ -168,7 +170,7 @@ export default function NavbarClient({ searchIndex }: NavbarClientProps) {
                 value={query}
                 onChange={e => setQuery(e.target.value)}
                 placeholder="Search posts..."
-                className="w-full rounded-lg border border-border bg-surface py-2 pl-3 pr-9 text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent"
+                className="w-full rounded-full border border-border bg-surface-2 py-2.5 pl-4 pr-10 text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent"
               />
               <button
                 type="submit"
@@ -178,7 +180,7 @@ export default function NavbarClient({ searchIndex }: NavbarClientProps) {
                 <Search size={16} />
               </button>
               {query.trim().length >= 2 && (
-                <div className="mt-2 overflow-hidden rounded-2xl border border-border bg-surface shadow-lg">
+                <div className="surface-elevated mt-2 overflow-hidden rounded-3xl bg-surface">
                   {results.length > 0 ? (
                     <ul className="py-2">
                       {results.map(result => (
@@ -186,10 +188,10 @@ export default function NavbarClient({ searchIndex }: NavbarClientProps) {
                           <button
                             type="button"
                             onClick={() => handleResultClick(result.slug)}
-                            className="block w-full px-4 py-2 text-left transition-colors hover:bg-bg"
+                            className="block w-full px-4 py-3 text-left transition-colors hover:bg-surface-2"
                           >
-                            <div className="text-sm font-medium text-text">{result.title}</div>
-                            {result.category && <div className="text-xs text-muted">{result.category}</div>}
+                            {result.category && <div className="eyebrow mb-1 text-[10px]">{result.category}</div>}
+                            <div className="text-sm font-medium leading-snug text-text">{result.title}</div>
                           </button>
                         </li>
                       ))}

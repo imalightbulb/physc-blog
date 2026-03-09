@@ -49,12 +49,14 @@ export default function CategoryClient({ posts, category, displayName }: Categor
   return (
     <>
       {/* Page header */}
-      <div className="border-b border-border bg-surface py-8">
-        <div className="max-w-6xl mx-auto px-4">
-          <h1 className="text-3xl font-bold text-text font-serif">{displayName}</h1>
-          <p className="mt-1 text-sm text-muted">
+      <div className="page-header">
+        <div className="page-header__inner">
+          <p className="eyebrow">{displayName}</p>
+          <h1 className="section-title mt-3">{displayName} archive.</h1>
+          <p className="section-kicker">
             {filtered.length} {filtered.length === 1 ? 'post' : 'posts'}
             {activeTag && <> tagged <span className="font-medium text-accent">#{activeTag}</span></>}
+            {!activeTag && <> organised to help visitors move from broad topics into more specific research areas.</>}
           </p>
         </div>
       </div>
@@ -97,7 +99,7 @@ export default function CategoryClient({ posts, category, displayName }: Categor
           {tags.length > 0 && (
             <aside className="hidden w-64 flex-shrink-0 md:block">
               <div className="sticky top-24">
-                <div className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
+                <div className="surface-elevated rounded-[1.75rem] bg-surface p-4">
                   <h2 className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted">Filter by tag</h2>
                   <button
                     onClick={() => setTag('')}
@@ -115,7 +117,7 @@ export default function CategoryClient({ posts, category, displayName }: Categor
                         activeTag === group.area || activeTag.startsWith(`${group.area}/`)
                       );
                       return (
-                        <div key={group.area} className="rounded-xl border border-border/80 bg-bg/60">
+                        <div key={group.area} className="rounded-xl border border-border/80 bg-surface-2">
                           <button
                             type="button"
                             onClick={() => toggleArea(group.area)}
@@ -159,8 +161,8 @@ export default function CategoryClient({ posts, category, displayName }: Categor
           {/* Post grid */}
           <div className="flex-1 min-w-0">
             {filtered.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filtered.map(post => <BlogCard key={post.slug} post={post} />)}
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {filtered.map((post, index) => <BlogCard key={post.slug} post={post} variant={index === 0 ? 'featured' : 'default'} />)}
               </div>
             ) : (
               <div className="py-16 text-center text-muted">

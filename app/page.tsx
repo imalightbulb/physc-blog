@@ -6,6 +6,7 @@ import { getAllPosts } from '@/lib/posts';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import ParticleFallback from '@/components/ParticleFallback';
+import { ArrowRight, GraduationCap, Microscope, Users2 } from 'lucide-react';
 
 export const metadata: Metadata = {
   alternates: {
@@ -28,6 +29,7 @@ export default function HomePage() {
     `${researchAreas.size} research areas`,
     'Est. 2016',
   ];
+  const highlightPosts = latestPosts.slice(0, 5);
 
   return (
     <>
@@ -35,11 +37,11 @@ export default function HomePage() {
       <main id="main-content" className="flex-1">
         <HeroSection featuredPost={featuredPost} />
 
-        <section className="border-b border-border bg-surface/80">
-          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-6 md:flex-row md:items-center md:justify-between">
+        <section className="border-b border-border bg-surface-2/70">
+          <div className="section-shell flex flex-col gap-6 py-7 md:flex-row md:items-center md:justify-between">
             <div className="max-w-3xl animate-slide-up">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">Department of Physics</p>
-              <p className="mt-2 text-base leading-relaxed text-text md:text-lg">
+              <p className="eyebrow">Department Overview</p>
+              <p className="mt-3 text-base leading-relaxed text-text md:text-lg">
                 XMUM Physics brings together internationally trained faculty, interdisciplinary research, and industry-relevant training in fundamental and applied physics.
               </p>
             </div>
@@ -48,7 +50,7 @@ export default function HomePage() {
                 {quickStats.map(stat => (
                   <span
                     key={stat}
-                    className="animate-scale-in rounded-full border border-border bg-bg px-3 py-1 text-sm font-medium text-primary"
+                    className="animate-scale-in rounded-full border border-primary/10 bg-white px-3 py-1 text-sm font-medium text-primary shadow-sm"
                   >
                     {stat}
                   </span>
@@ -66,28 +68,75 @@ export default function HomePage() {
           </div>
         </section>
 
-        <div className="max-w-6xl mx-auto px-4 py-12">
+        <section className="section-space">
+          <div className="section-shell">
+            <div className="mb-8 max-w-3xl">
+              <p className="eyebrow">Explore XMUM Physics</p>
+              <h2 className="mt-3 text-3xl font-bold text-text font-serif">Three fast ways to understand the department.</h2>
+            </div>
+            <div className="grid gap-5 md:grid-cols-3">
+              <Link href="/about" className="surface-elevated group rounded-[1.75rem] p-6 transition hover:-translate-y-1">
+                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-surface-3 text-accent"><GraduationCap size={20} /></div>
+                <p className="eyebrow mb-3">Study Physics</p>
+                <h3 className="mb-3 text-xl font-semibold text-text font-serif">Programmes, mission, and student outcomes.</h3>
+                <p className="text-sm leading-relaxed text-muted">See how the department frames its teaching, facilities, accreditation context, and graduate pathways.</p>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent">Open About <ArrowRight size={15} /></span>
+              </Link>
+              <Link href="/faculty" className="surface-elevated group rounded-[1.75rem] p-6 transition hover:-translate-y-1">
+                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-surface-3 text-accent"><Users2 size={20} /></div>
+                <p className="eyebrow mb-3">Meet the Faculty</p>
+                <h3 className="mb-3 text-xl font-semibold text-text font-serif">Browse the people behind the research and teaching.</h3>
+                <p className="text-sm leading-relaxed text-muted">Explore faculty profiles, research tags, and areas spanning theory, experiment, photonics, and quantum science.</p>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent">View Faculty <ArrowRight size={15} /></span>
+              </Link>
+              <Link href="/category/Research" className="surface-elevated group rounded-[1.75rem] p-6 transition hover:-translate-y-1">
+                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-surface-3 text-accent"><Microscope size={20} /></div>
+                <p className="eyebrow mb-3">Research and Talks</p>
+                <h3 className="mb-3 text-xl font-semibold text-text font-serif">Follow publications, seminars, and department updates.</h3>
+                <p className="text-sm leading-relaxed text-muted">Use the site as an editorial archive for current work, student achievements, and invited talks.</p>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent">Browse Archive <ArrowRight size={15} /></span>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-space pt-0">
+          <div className="section-shell">
           {latestPosts.length > 0 && (
             <section>
-              <div className="mb-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">Latest</p>
-                <h2 className="text-2xl font-bold text-text font-serif">Latest Posts</h2>
+              <div className="mb-9 max-w-3xl">
+                <p className="eyebrow">Latest</p>
+                <h2 className="mt-3 text-3xl font-bold text-text font-serif">Latest posts from the department.</h2>
+                <p className="section-kicker">Recent stories, research highlights, faculty news, student experiences, and invited talks from XMUM Physics.</p>
               </div>
-              <div className="card-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {latestPosts.map(post => (
-                  <BlogCard key={post.slug} post={post} />
+              <div className="card-grid grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {highlightPosts.map((post, index) => (
+                  <BlogCard key={post.slug} post={post} variant={index === 0 ? 'featured' : 'default'} />
                 ))}
               </div>
             </section>
           )}
 
+          <section className="surface-muted mt-12 rounded-[2rem] p-8 md:flex md:items-center md:justify-between md:gap-8">
+            <div className="max-w-2xl">
+              <p className="eyebrow mb-3">Department Gateway</p>
+              <h2 className="text-3xl font-bold text-text font-serif">Start with the people, then follow the work.</h2>
+              <p className="mt-3 text-sm leading-relaxed text-muted">Use the faculty directory to map research strengths, then browse category and tag pages to move through talks, news, and publications.</p>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3 md:mt-0">
+              <Link href="/faculty" className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-deep">Faculty Directory</Link>
+              <Link href="/category/News" className="rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-primary transition-colors hover:border-accent hover:text-accent">Department News</Link>
+            </div>
+          </section>
+
           {allPosts.length === 0 && (
             <div className="py-20 text-center text-muted">
-              <ParticleFallback className="mb-4" size={92} />
+              <ParticleFallback className="mb-4" size={92} tone="muted" />
               <p className="text-xl text-text">No posts yet. Check back soon.</p>
             </div>
           )}
-        </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </>
