@@ -13,6 +13,8 @@ import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/site';
 import ReadingProgress from '@/components/ReadingProgress';
 import TableOfContents from '@/components/TableOfContents';
+import ShareButtons from '@/components/ShareButtons';
+import { PostLikeButton, PostComments } from '@/components/PostInteractions';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -110,7 +112,8 @@ export default async function PostPage({ params }: Props) {
         )}
 
         <div className="section-shell section-space animate-fade-in">
-          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
+          <div className="mx-auto max-w-6xl">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
             <div className="min-w-0">
               <div className="surface-muted mb-8 flex flex-wrap items-center gap-4 rounded-[1.5rem] p-5 text-sm text-muted">
                 <span className="flex items-center gap-1.5">
@@ -131,6 +134,12 @@ export default async function PostPage({ params }: Props) {
 
               <div className="surface-elevated rounded-[2rem] p-6 md:p-10">
                 <PostContent content={post.content} />
+              </div>
+
+              {/* Share + Like */}
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-[1.5rem] border border-border bg-surface p-4">
+                <ShareButtons url={absoluteUrl(`/blog/${post.slug}`)} title={post.title} />
+                <PostLikeButton slug={post.slug} />
               </div>
 
               {(prev || next) && (
@@ -162,6 +171,10 @@ export default async function PostPage({ params }: Props) {
                 </div>
               )}
             </aside>
+          </div>
+
+          {/* Comments — full width below the two-column grid */}
+          <PostComments slug={post.slug} />
           </div>
         </div>
       </main>
